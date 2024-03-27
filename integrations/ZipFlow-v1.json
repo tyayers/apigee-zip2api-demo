@@ -1,0 +1,264 @@
+{
+  "name": "projects/209533575107/locations/europe-west1/integrations/TransitData-v1/versions/5c99839b-61c5-4ec1-82fb-faacc1259d7f",
+  "updateTime": "2024-03-24T05:47:33.351Z",
+  "createTime": "2024-03-24T05:46:51.826Z",
+  "lastModifierEmail": "tyayers@google.com",
+  "triggerConfigs": [{
+    "label": "GetTransitData",
+    "startTasks": [{
+      "taskId": "5"
+    }],
+    "properties": {
+      "Trigger name": "TransitData-v1_API_1"
+    },
+    "triggerType": "API",
+    "triggerNumber": "1",
+    "triggerId": "api_trigger/TransitData-v1_API_1",
+    "position": {
+      "x": -210
+    }
+  }],
+  "taskConfigs": [{
+    "task": "GenericRestV2Task",
+    "taskId": "4",
+    "parameters": {
+      "throwError": {
+        "key": "throwError",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "responseBody": {
+        "key": "responseBody",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_4_responseBody`$"]
+          }
+        }
+      },
+      "disableSSLValidation": {
+        "key": "disableSSLValidation",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "httpParams": {
+        "key": "httpParams"
+      },
+      "authConfigName": {
+        "key": "authConfigName",
+        "value": {
+          "stringValue": "Transit Service"
+        }
+      },
+      "authConfig": {
+        "key": "authConfig",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.authconfig.AuthConfigTaskParam\"\n}"
+        }
+      },
+      "responseHeader": {
+        "key": "responseHeader",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_4_responseHeader`$"]
+          }
+        }
+      },
+      "userAgent": {
+        "key": "userAgent",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "httpMethod": {
+        "key": "httpMethod",
+        "value": {
+          "stringValue": "POST"
+        }
+      },
+      "responseStatus": {
+        "key": "responseStatus",
+        "value": {
+          "stringArray": {
+            "stringValues": ["$`Task_4_responseStatus`$"]
+          }
+        }
+      },
+      "url": {
+        "key": "url",
+        "value": {
+          "stringValue": "https://europe-west1-apigee-test43.cloudfunctions.net/zip-ops-http-function"
+        }
+      },
+      "useSSL": {
+        "key": "useSSL",
+        "value": {
+          "booleanValue": false
+        }
+      },
+      "urlFetchingService": {
+        "key": "urlFetchingService",
+        "value": {
+          "stringValue": "HARPOON"
+        }
+      },
+      "urlQueryStrings": {
+        "key": "urlQueryStrings",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.ParameterMap\",\n  \"entries\": [{\n    \"key\": {\n      \"literalValue\": {\n        \"stringValue\": \"fileUrl\"\n      }\n    },\n    \"value\": {\n      \"referenceKey\": \"$remoteFileUrl$\"\n    }\n  }]\n}"
+        }
+      },
+      "requestorId": {
+        "key": "requestorId",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "requestBody": {
+        "key": "requestBody",
+        "value": {
+          "stringValue": ""
+        }
+      },
+      "followRedirects": {
+        "key": "followRedirects",
+        "value": {
+          "booleanValue": true
+        }
+      },
+      "additionalHeaders": {
+        "key": "additionalHeaders"
+      }
+    },
+    "nextTasks": [{
+      "taskId": "6"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Get transit data",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": -210,
+      "y": 252
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "5",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"STRING_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$remoteFileUrl$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"CONCAT\"\n            }\n          },\n          \"parameters\": [{\n            \"initialValue\": {\n              \"referenceValue\": \"$authority$\"\n            },\n            \"transformationFunctions\": [{\n              \"functionType\": {\n                \"stringFunction\": {\n                  \"functionName\": \"CONCAT\"\n                }\n              },\n              \"parameters\": [{\n                \"initialValue\": {\n                  \"literalValue\": {\n                    \"stringValue\": \".zip\"\n                  }\n                }\n              }]\n            }]\n          }]\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$remoteFileUrl$\",\n      \"fieldType\": \"STRING_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "4"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Set transit URL",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": -210,
+      "y": 126
+    }
+  }, {
+    "task": "FieldMappingTask",
+    "taskId": "6",
+    "parameters": {
+      "FieldMappingConfigTaskParameterKey": {
+        "key": "FieldMappingConfigTaskParameterKey",
+        "value": {
+          "jsonValue": "{\n  \"@type\": \"type.googleapis.com/enterprise.crm.eventbus.proto.FieldMappingConfig\",\n  \"mappedFields\": [{\n    \"inputField\": {\n      \"fieldType\": \"JSON_VALUE\",\n      \"transformExpression\": {\n        \"initialValue\": {\n          \"referenceValue\": \"$`Task_4_responseBody`$\"\n        },\n        \"transformationFunctions\": [{\n          \"functionType\": {\n            \"stringFunction\": {\n              \"functionName\": \"TO_JSON\"\n            }\n          }\n        }]\n      }\n    },\n    \"outputField\": {\n      \"referenceKey\": \"$responseDataFull$\",\n      \"fieldType\": \"JSON_VALUE\",\n      \"cardinality\": \"OPTIONAL\"\n    }\n  }]\n}"
+        }
+      }
+    },
+    "nextTasks": [{
+      "taskId": "7"
+    }],
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Convert response to JSON",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": -210,
+      "y": 378
+    }
+  }, {
+    "task": "JsonnetMapperTask",
+    "taskId": "7",
+    "parameters": {
+      "template": {
+        "key": "template",
+        "value": {
+          "stringValue": "local f \u003d import \"functions\"; // Import additional functions\nlocal responseData \u003d f.extVar(\"responseDataFull\");\nlocal type \u003d f.extVar(\"type\");\n\n{\n    responseData: f.parseCsvWithHeader([x for x in responseData.result if x.name \u003d\u003d type + \".txt\"][0].contents)\n}\n\n"
+        }
+      }
+    },
+    "taskExecutionStrategy": "WHEN_ALL_SUCCEED",
+    "displayName": "Transform CSV to JSON",
+    "externalTaskType": "NORMAL_TASK",
+    "position": {
+      "x": -210,
+      "y": 504
+    }
+  }],
+  "integrationParameters": [{
+    "key": "authority",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "203"
+    },
+    "displayName": "authority",
+    "inputOutputType": "IN"
+  }, {
+    "key": "zipContents",
+    "dataType": "STRING_VALUE",
+    "displayName": "zipContents"
+  }, {
+    "key": "`Task_4_responseHeader`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_4_responseHeader`",
+    "isTransient": true,
+    "producer": "1_4"
+  }, {
+    "key": "`Task_4_responseStatus`",
+    "dataType": "STRING_VALUE",
+    "displayName": "`Task_4_responseStatus`",
+    "isTransient": true,
+    "producer": "1_4"
+  }, {
+    "key": "remoteFileUrl",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "https://tvv.fra1.digitaloceanspaces.com/"
+    },
+    "displayName": "remoteFileUrl"
+  }, {
+    "key": "responseDataFull",
+    "dataType": "JSON_VALUE",
+    "displayName": "responseDataFull",
+    "jsonSchema": "{\n  \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n  \"type\": \"object\",\n  \"properties\": {\n    \"result\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"contents\": {\n            \"type\": \"string\"\n          },\n          \"name\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    }\n  }\n}"
+  }, {
+    "key": "`Task_4_responseBody`",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": ""
+    },
+    "displayName": "`Task_4_responseBody`",
+    "isTransient": true,
+    "producer": "1_4"
+  }, {
+    "key": "responseData",
+    "dataType": "JSON_VALUE",
+    "displayName": "responseData",
+    "inputOutputType": "OUT"
+  }, {
+    "key": "type",
+    "dataType": "STRING_VALUE",
+    "defaultValue": {
+      "stringValue": "stops"
+    },
+    "displayName": "type",
+    "inputOutputType": "IN"
+  }]
+}
