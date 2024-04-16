@@ -48,7 +48,7 @@
       "authConfigName": {
         "key": "authConfigName",
         "value": {
-          "stringValue": "Transit Service"
+          "stringValue": "Zip Auth Profile"
         }
       },
       "authConfig": {
@@ -88,7 +88,7 @@
       "url": {
         "key": "url",
         "value": {
-          "stringValue": "https://europe-west1-apigee-test43.cloudfunctions.net/zip-ops-http-function"
+          "stringValue": "https://FUNCTIONS_REGION-FUNCTIONS_PROJECT.cloudfunctions.net/zip-function"
         }
       },
       "useSSL": {

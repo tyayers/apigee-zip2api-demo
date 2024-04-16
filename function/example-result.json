@@ -1,0 +1,14 @@
+{
+  "result": [
+    {
+      "name": "package.json",
+      "stamp": "2022-11-02T00:48:20.000Z",
+      "contents": "{\n  \"name\": \"zip-ops\",\n  \"version\": \"1.0.0\",\n  \"description\": \"\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"local\" : \"npx functions-framework --target=zip-ops-handler --signature-type=http\",\n    \"test\": \"echo \\\"Error: no test specified\\\" && exit 1\"\n  },\n  \"author\": {\n    \"name\": \"Dino Chiesa\",\n    \"email\": \"dchiesa@google.com\"\n  },\n  \"license\": \"Apache-2.0\",\n  \"dependencies\": {\n    \"@google-cloud/functions-framework\": \"^3.0.0\"\n  },\n  \"engines\": {\n    \"node\": \">= 12.22.0\",\n    \"npm\": \">= 8.3.0\"\n  },\n  \"devDependencies\": {\n    \"adm-zip\": \"^0.5.9\"\n  }\n}\n"
+    },
+    {
+      "name": "index.js",
+      "stamp": "2022-11-02T00:47:56.000Z",
+      "contents": "// index.js\n// ------------------------------------------------------------------\n//\n/* jshint esversion:9, node:true, strict:implied */\n/* global process, console, Buffer */\n\nconst functions = require('@google-cloud/functions-framework');\nconst AdmZip   = require('adm-zip');\n\nconst base64Decode = (encoded) => Buffer.from(encoded.trim(), 'base64');\n\n// Register an HTTP function with the Functions Framework\nfunctions.http('zip-ops-handler', (req, res) => {\n  // This is an Express middlware\n  // Can access the req.body and req.rawBody objects here\n  const bufferForDecodedFile = base64Decode(req.rawBody),\n        zip = new AdmZip(bufferForDecodedFile),\n        zipEntries = zip.getEntries();\n  let result =\n    zipEntries.map(entry => ({\n      name: entry.entryName,\n      contents: entry.getData().toString('base64')\n    }));\n\n  // Send an HTTP response\n  res.send(JSON.stringify({result}));\n});\n"
+    }
+  ]
+}%
